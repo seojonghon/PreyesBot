@@ -1,0 +1,36 @@
+/* src/components/Home.css */
+
+body {
+    background-color: #f4f4f4; /* 배경색 설정 */
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 2.5em;
+  }
+  
+  .home-image {
+    width: 100%; /* 화면 크기에 맞게 조절 */
+    max-width: 600px; /* 최대 너비 설정 */
+    height: auto; /* 비율 유지 */
+    display: block; /* 블록 요소로 설정하여 중앙 정렬 가능 */
+    margin: 20px auto; /* 위아래 여백 추가 및 중앙 정렬 */
+    border-radius: 8px; /* 모서리 둥글게 */
+  }
+  
+  .loading {
+    text-align: center;
+    font-size: 1.2em;
+    color: #007bff;
+  }
+  
