@@ -1,52 +1,75 @@
-const fetchPurchaseHistory = async () => {
+import React, { useEffect, useState } from 'react';
+
+const Mypage = () => {
+  const [purchaseHistory, setPurchaseHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchPurchaseHistory = async () => {
     try {
       const response = await fetch('http://localhost:5000/api/purchaseHistory');
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
-  
+
       // 데이터 구조 확인
       if (data && Array.isArray(data.data)) {
-        displayPurchaseHistory(data.data);
+        setPurchaseHistory(data.data);
       } else {
         console.error('Invalid data structure:', data);
       }
     } catch (error) {
       console.error('Error fetching purchase history:', error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
-  
-  
-  const displayPurchaseHistory = (history) => {
-    const table = document.getElementById('purchase-history-table');
-    table.innerHTML = ''; // 기존 내용 초기화
-  
-    // 테이블 헤더 추가
-    const headerRow = document.createElement('tr');
-    headerRow.innerHTML = `
-      <th>주식명</th>
-      <th>구매 가격</th>
-      <th>수량</th>
-      <th>총 비용</th>
-      <th>구매 날짜</th>
-    `;
-    table.appendChild(headerRow);
-  
-    // 구매 내역 추가
-    history.forEach(purchase => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${purchase.name}</td>
-        <td>${purchase.price.toFixed(2)}</td>
-        <td>${purchase.quantity}</td>
-        <td>${purchase.totalCost.toFixed(2)}</td>
-        <td>${new Date(purchase.date).toLocaleString()}</td>
-      `;
-      table.appendChild(row);
-    });
+
+  useEffect(() => {
+    fetchPurchaseHistory();
+  }, []);
+
+  const renderPurchaseHistory = () => {
+    return purchaseHistory.map((purchase) => (
+      <tr key={purchase.id}>
+        <td>{purchase.name}</td>
+        <td>{purchase.price.toFixed(2)}</td>
+        <td>{purchase.quantity}</td>
+        <td>{purchase.totalCost.toFixed(2)}</td>
+        <td>{new Date(purchase.date).toLocaleString()}</td>
+      </tr>
+    ));
   };
-  
-  // 페이지 로드 시 구매 내역 가져오기
-  window.onload = fetchPurchaseHistory;
-  
+
+  if (loading) {
+    return <div>Loading...</div>; // 로딩 중 표시
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>; // 오류 표시
+  }
+
+  return (
+    <div>
+      <h1>구매 내역</h1>
+      <table id="purchase-history-table">
+        <thead>
+          <tr>
+            <th>주식명</th>
+            <th>구매 가격</th>
+            <th>수량</th>
+            <th>총 비용</th>
+            <th>구매 날짜</th>
+          </tr>
+        </thead>
+        <tbody>
+          {renderPurchaseHistory()}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default Mypage;
