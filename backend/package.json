@@ -9,13 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-<<<<<<< HEAD
   "description": "",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.19.2"
   }
-=======
-  "description": ""
->>>>>>> 7cc3afddb8f9fb41df4c034e2c36c9412a6fa94d
 }
