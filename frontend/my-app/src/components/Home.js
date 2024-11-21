@@ -1,17 +1,20 @@
-// src/components/Home.js
 import React from 'react';
-import '../css/Home.css'; // 필요시 추가
-import stockImage from '../assets/home-image.jpg'; // 이미지 import
+import { useHistory } from 'react-router-dom';
 
-function Home() {
+const Home = () => {
+  const history = useHistory();
+
+  const goToMyPage = () => {
+    history.push('/mypage'); // Mypage.js로 이동
+  };
+
   return (
-    <div className="container">
-      <h1>PREYES</h1>
-      <img src={stockImage} alt="주식 예측" className="home-image" />
-      <p>우리의 AI 봇은 최신 데이터를 기반으로 주식 시장을 분석하고 예측합니다.</p>
-      <p>지금 바로 시작해보세요!</p>
+    <div>
+      <h1>홈페이지</h1>
+      <button onClick={goToMyPage}>내 페이지로 가기</button>
+      {/* 다른 컴포넌트나 내용 추가 */}
     </div>
   );
-}
+};
 
 export default Home;

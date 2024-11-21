@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 
 let currentBalance = 0;
 let stocks = [];
+let purchaseHistory = []; // 구매 내역 저장 배열 추가
 
 // 초기 데이터 설정
 const initializeStocks = () => {
@@ -52,6 +53,15 @@ const investInStocks = () => {
     if (currentBalance >= totalCost) {
       stockToBuy.quantity += quantity; // 주식 수량 증가
       currentBalance -= totalCost; // 원금 차감
+
+      // 구매 내역 기록
+      purchaseHistory.push({
+        name: stockToBuy.name,
+        price: stockToBuy.price,
+        quantity: quantity,
+        totalCost: totalCost,
+        date: new Date().toISOString()
+      });
     }
   }
 };
@@ -62,6 +72,7 @@ app.post('/api/setBalance', (req, res) => {
   if (balance > 0) {
     currentBalance = balance;
     initializeStocks(); // 주식 초기화
+    purchaseHistory = []; // 구매 내역 초기화
     return res.json({ data: { currentBalance, stocks } });
   }
   return res.status(400).json({ error: 'Invalid balance' });
@@ -80,6 +91,11 @@ app.get('/api/data', (req, res) => {
       returnRate: returnRate.toFixed(2) + '%' // 소수점 2자리로 포맷
     } 
   });
+});
+
+// 구매 내역 조회
+app.get('/api/purchaseHistory', (req, res) => {
+  return res.json({ data: purchaseHistory });
 });
 
 // 서버 시작

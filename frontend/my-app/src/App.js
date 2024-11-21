@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import DataDisplay from './components/DataDisplay';
+import MyPage from './components/Mypage'; // Mypage 컴포넌트 import
 
 function App() {
   return (
@@ -13,6 +14,9 @@ function App() {
           <li>
             <Link to="/data">AI 투자</Link>
           </li>
+          <li>
+            <Link to="/mypage">내 페이지</Link> {/* Mypage 링크 추가 */}
+          </li>
         </ul>
       </nav>
 
@@ -21,6 +25,8 @@ function App() {
         <Route path="/" element={<Home />} />
         {/* 데이터 및 투자 페이지 */}
         <Route path="/data" element={<DataDisplay />} />
+        {/* 내 페이지 */}
+        <Route path="/mypage" element={<MyPage />} /> {/* Mypage 경로 추가 */}
       </Routes>
     </Router>
   );
