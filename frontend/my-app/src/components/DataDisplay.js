@@ -55,7 +55,7 @@ const DataDisplay = () => {
       return 0;
     }
 
-    let totalInvestment = 10000 - stockData.currentBalance; // 초기 투자 금액
+    let totalInvestment = stockData.currentBalance; // 초기 투자 금액
     let totalValue = 0;
 
     stockData.stocks.forEach((stock) => {

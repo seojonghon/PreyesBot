@@ -1,13 +1,22 @@
-// mypage.js
 const fetchPurchaseHistory = async () => {
     try {
       const response = await fetch('http://localhost:5000/api/purchaseHistory');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
       const data = await response.json();
-      displayPurchaseHistory(data.data);
+  
+      // 데이터 구조 확인
+      if (data && Array.isArray(data.data)) {
+        displayPurchaseHistory(data.data);
+      } else {
+        console.error('Invalid data structure:', data);
+      }
     } catch (error) {
       console.error('Error fetching purchase history:', error);
     }
   };
+  
   
   const displayPurchaseHistory = (history) => {
     const table = document.getElementById('purchase-history-table');
